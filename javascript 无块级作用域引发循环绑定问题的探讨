@@ -1,6 +1,6 @@
- #javascript 无块级作用域引发循环绑定问题的探讨 #
+ # javascript 无块级作用域引发循环绑定问题的探讨 #
 
-javascript 中一个比较经典的问题-**循环绑定问题**大家对这个问题也一定不陌生，最近也有同事问我缘由，今天我就粗浅的分析下。**ES** is a full-featured Markdown editor for Windows.
+ javascript 中一个比较经典的问题-**循环绑定问题**大家对这个问题也一定不陌生，最近也有同事问我缘由，今天我就粗浅的分析下。**ES** is a full-featured Markdown editor for Windows.
 
 ## 问题的产生 ##
 
