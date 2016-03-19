@@ -1,0 +1,53 @@
+# 浅谈跨域解决方案 #
+
+首先-**跨域问题**是因为浏览器的同源限制，在浏览器中限制不同作用域访问资源，由此，就出现了跨域的问题。但是，向我们这种经常要与有很多的关联方打交道，所以跨域的问题就会经常遇到，网上也有很多的方式，以下是自己在工作中总结的几种方案。
+
+## 跨域问题产生的场景 ##
+
+当我们在页面中使用js获取其他网站的数据时，比如使用ajax请求其他网站下的数据接口以及app中请求的数据，浏览器就会提示错误。这些场景下就要解决跨域问题。只要是域名和端口号中任意不同，就是跨域，这个就不多说。
+
+
+## 解决问题的几种经典方案 ##
+
+* jsonp方式
+* 动态创建script
+* 服务端代理
+* window.name+iframe 方式
+
+
+### jsonp方式 ###
+
+  
+jsonp 实现跨域最简单的形式，但是也需要和后端的配合。以下是发送jsonp 请求的形式如下：  
+
+    $.ajax({
+	    url: ' http://url...’, //不同的域
+	    type: 'GET', // jsonp模式只能GET
+	    data: {}, // 传参
+	    dataType: 'jsonp', // 数据类型
+	    jsonp: 'backfunc', // 指定回调函数名，与服务器端接收的一致，并回传回来
+    })
+
+看过jquery源码的童鞋都知道，jsonp本质是动态创建script标签。下面就来说这种情况。
+
+
+### 动态创建script###
+
+
+
+    
+    var head= document.getElementsByTagName('head')[0]; 
+    var script= document.createElement('script'); 
+    script.type= 'text/javascript'; 
+    script.onload = script.onreadystatechange = function({ 
+	    if (!this.readyState || this.readyState === "loaded" || this.readyState === "complete" ) { 
+	    help(); 
+	    // Handle memory leak in IE 
+	    script.onload = script.onreadystatechange = null; 
+    	} 
+	}; 
+    script.src= 'helper.js'; 
+    head.appendChild(script); 
+
+
+### window.name+iframe 方式 ###
