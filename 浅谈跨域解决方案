@@ -1,24 +1,24 @@
 # 浅谈跨域解决方案 #
 
-首先-**跨域问题**是因为浏览器的同源限制，在浏览器中限制不同作用域访问资源，由此，就出现了跨域的问题。但是，向我们这种经常要与有很多的关联方打交道，所以跨域的问题就会经常遇到，网上也有很多的方式，以下是自己在工作中总结的几种方案。
+首先-**跨域问题**是因为浏览器的同源限制，在浏览器中限制不同作用域访问资源，由此，就出现了跨域的问题。但是，向我们这种经常要与有很多的关联方打交道，所以跨域的问题就会经常遇到，网上也有很多的方式，以下是自己在工作中尝试用到了，现在总结一下，希望对自己和大家都有帮助。
 
 ## 跨域问题产生的场景 ##
 
-当我们在页面中使用js获取其他网站的数据时，比如使用ajax请求其他网站下的数据接口以及app中请求的数据，浏览器就会提示错误。这些场景下就要解决跨域问题。只要是域名和端口号中任意不同，就是跨域，这个就不多说。
+当我们在页面中使用js获取其他网站的数据时，比如使用ajax请求其他网站下的数据接口以及app中请求的数据，浏览器就会提示错误。这些场景下就要解决跨域问题。只要是协议，域名和端口号中任意不同，就是跨域，这个就不多说。
 
 
 ## 解决问题的几种经典方案 ##
 
 * jsonp方式
 * 动态创建script
-* 服务端代理
 * window.name+iframe 方式
+* 跨域资源共享（CORS）
 
 
 ### jsonp方式 ###
 
   
-jsonp 实现跨域最简单的形式，但是也需要和后端的配合。以下是发送jsonp 请求的形式如下：  
+在js中，我们直接用XMLHttpRequest请求不同域上的数据时，是不可以的。但是，在页面上引入不同域上的js脚本文件却是可以的，jsonp正是利用这个特性来实现的。js文件载入成功后会执行我们在url参数中指定的函数，并且会把我们需要的json数据作为参数传入，所以也需要和后端的配合。以下前端页面发送jsonp 请求的形式如下：  
 
     $.ajax({
 	    url: ' http://url...’, //不同的域
@@ -28,26 +28,77 @@ jsonp 实现跨域最简单的形式，但是也需要和后端的配合。以�
 	    jsonp: 'backfunc', // 指定回调函数名，与服务器端接收的一致，并回传回来
     })
 
-看过jquery源码的童鞋都知道，jsonp本质是动态创建script标签。下面就来说这种情况。
+jsonp 实现跨域最简单的形式,但是，只能支持get方式，不支持post请求。看过jquery源码的童鞋都知道，jsonp本质是动态创建script标签。下面就来说这种情况。
 
 
 ### 动态创建script###
 
-
+创建script标签，设置其src属性，然后，通过appendchild 方法把script标签插入到页面head中，以这种方式来加载js，相当于在head中写了一个<script src="..."></script>,只不过这个script标签是用js动态创建的。
 
     
-    var head= document.getElementsByTagName('head')[0]; 
-    var script= document.createElement('script'); 
-    script.type= 'text/javascript'; 
-    script.onload = script.onreadystatechange = function({ 
-	    if (!this.readyState || this.readyState === "loaded" || this.readyState === "complete" ) { 
-	    help(); 
-	    // Handle memory leak in IE 
-	    script.onload = script.onreadystatechange = null; 
-    	} 
-	}; 
-    script.src= 'helper.js'; 
-    head.appendChild(script); 
+    	loadScript: function(url, callback) {
+
+		var s = document.createElement("script");
+		s.type = "text/javascript";
+		s.charset = "utf-8";
+		s.src = url;
+		s.async = true;
+		s.onload = s.onreadystatechange = function() {
+			if (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete') {
+				if (callback) {
+					callback();
+				}
+				s.onload = s.onreadystatechange = null;
+			}
+		};
+		document.getElementsByTagName("head")[0].appendChild(s);
+	}
+    
+
 
 
 ### window.name+iframe 方式 ###
+
+这种方式虽然被很多人吐槽，之前，在做一个项目的时候，它确实符合了当时的情况，就采用了这种方式。先简单介绍下iframe 和window.name 的知识。 iframe 是html的一个标签，可以在网页中创建内联框架，有个src属性（指向文件地址，html、php等）可以选择内联框架的内容。window.name （一般在js代码里出现）的值不是一个普通的全局变量，而是当前窗口的名字，name 值在不同的页面（甚至不同域名）加载后依旧存在（如果没修改则值不会变化），并且可以支持非常长的 name 值（2MB）。我们正是利用iframe的src属性指向服务器文件地址（iframe标签的跨域能力)和设置好window.name的值（也就是该iframe的contentWindow的name值，来实现跨域。
+简单模拟下场景。先有两个页面shenzhen.html 和shanghai.html 位于不同的域名下面，但是现在页面shanghai.html页面要访问shenzhen.html，只能通过前端引入js的方式来加载。如下：首先在shanghai.html相同的域名下指定一个代理页面proxy.html 文件，proxy.html 可以是一个空页面，主要的作用是在iframe载入过程中，迅速重置iframe.src的指向，使之与shanghai.html同源。
+我们可以在shenzhen.html 环境下，新建一个load.js 来供shanghai.html 页面引入。load.js 如下：
+
+
+
+	    var state = 0, 
+	    iframe = document.createElement('iframe'),
+	    loadfn = function() {
+	        if (state === 1) {
+	            var data = iframe.contentWindow.name;    // 读取数据
+	            alert(data);    //弹出'shenzhen.html 页面的innerHTML的内容'
+	        } else if (state === 0) {
+	            state = 1;
+	            iframe.contentWindow.location = "http://127.0.0.1:3000/proxy.html";    // shanghai域名下设置的代理文件
+	        }  
+	    };
+	    iframe.src = 'http://localhost:3000/shenzhen.html';
+	    if (iframe.attachEvent) {
+	        iframe.attachEvent('onload', loadfn);
+	    } else {
+	        iframe.onload  = loadfn;
+	    }
+	    document.body.appendChild(iframe);
+	
+以上需要主要的一点是，shengzhen.html 页面的</body>之前要添加一下代码：
+
+	<script>
+		window.name = document.getElementById('aaa').innerHTML
+	</script>
+	
+### 跨域资源共享（CORS）###
+
+CROS（Cross-Origin Resource Sharing）跨域资源共享，定义了必须在访问跨域资源时，浏览器与服务器应该如何沟通。
+CROS背后的基本思想就是使用自定义的HTTP头部让浏览器与服务器进行沟通。服务器端对于CORS的支持，主要就是通过设置Access-Control-Allow-Origin来进行的。
+如果浏览器检测到相应的设置，就可以允许Ajax进行跨域的访问。
+
+	<script type="text/javascript">
+	    var xhr = new XMLHttpRequest();
+	    xhr.open("￼GET", "http://stock.pingan.com/",true);
+	    xhr.send();
+	</script>
+跨域资源共享(Cross-Origin Resource Sharing)实现Ajax跨域请求的方式网上也有很多的介绍，之前，看过IMWEB前端社区中有篇文章主要介绍这种方式的用法。
