@@ -72,7 +72,41 @@ Jquery中利用事件委托来绑定事件的方法有很多，如：**bind,live
 	    })(i);
     
     }
+    // 全局参数定义
+	var config = {
+		map: {
+			jsURI: [
+				'http://web.com/new_public/header_footer.js',
+				'http://web.com/device.min.js',
+				'http://web.com/app_js/stock/lib/jquery-1.8.3.min.js'
+			],
+			cssURI: [
+				'http://web.com/new_public/header_footer.css',
+				'http://web.com/lib/normalize.min.css'
+			],
+		}
 
+	};
+	load: function(callback) {
+		var loadFun = callback;
+		
+		for ( var i = 0;  i < config.map.jsURI.length; i++ ) {
+			var jsUrl = config.map.jsURI[i];
+			loadFun = (function(url, callback){
+				return function(){ loader.loadScript(url, callback); };
+			})(jsUrl, loadFun);
+		}
+		
+		for ( var i = 0;  i < config.map.cssURI.length; i++ ) {
+			var cssUrl = config.map.cssURI[i];
+			loadFun = (function(url, callback){
+				return function(){ loader.loadCss(url, callback); };
+			})(cssUrl, loadFun);
+		}
+		loadFun();
+	}
+
+还有一些项目中要动态加载文件的时候，也是需要函数闭包的来实现。
 
 ### ES6中定义变量方式let ###
 
