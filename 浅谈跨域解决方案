@@ -101,4 +101,4 @@ CROS背后的基本思想就是使用自定义的HTTP头部让浏览器与服务
 	    xhr.open("￼GET", "http://stock.pingan.com/",true);
 	    xhr.send();
 	</script>
-跨域资源共享(Cross-Origin Resource Sharing)实现Ajax跨域请求的方式网上也有很多的介绍，之前，看过IMWEB前端社区中有篇文章主要介绍这种方式的用法。
+跨域资源共享（Cross-Origin Resource Sharing）支持ajax跨域调用网上也有很多的介绍，之前，看过IMWEB前端社区中有篇文章详细介绍这种方式的用法，有兴趣的的可以查阅。
