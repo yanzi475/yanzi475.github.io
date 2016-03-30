@@ -47,7 +47,7 @@
 
 ### 事件委托 ###
 
-Don't guess if your [hyperlink syntax](http://markdownpad.com) is correct; LivePreview will show you exactly what your document looks like every time you press a key.  
+
 针对要处理的元素不必每个绑定一个onclick事件，利用事件委托，只需要在DOM树的尽量最高的层次添加一个事件处理程序，（一般是在父节点上）一般是添加事件之前，这个节点已经存在，这样，还可以对于动态添加的子节点仍然能触发事件。  
 
     ulNode.onclick=function(event){
