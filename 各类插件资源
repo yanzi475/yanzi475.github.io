@@ -1,0 +1,136 @@
+# 插件资源#
+
+ 工作中所用的插件也不少，并且现在前端也是百花齐放，百家争鸣的时代。正是在这中时代下也孵化了各种的插件。之前一位大师就对我说过，学好前端就是先要用各种插件工具来搞定不同的问题。也是工欲善其事,必先利其器。作为一个搬砖少年，就总结并延伸下主要的插件。
+
+## swiper ##
+
+在我们的项目中左右滑动这种效果是最基本的。zepto作为Jquery的移动端简版库中也实现封装了swipe 方法，但用这种事件自己来实现其实还是要写点代码的。所以，swiper这种插件更加简化了我们的工作。我用到了仅仅是基金产品名片的左右滑动。官网中给出了演示以及如何配置参数，相信自己很快就会上手的。
+    
+* [swiper 官网](http://www.swiper.com.cn/) 
+* [演示](http://www.jiawin.com/swiper-mobile-touch-slider-js)
+
+
+## 下拉加载更多 ##
+
+这个功能和上面的swiper看似相同，其实则不然。下拉加载是滚动条滑到底部时触发事件来取得数据，并把取得的数据append 到指定的位置。这也是移动端节省流量和提高性能的实现。我们项目中现在是用的scroll。目前也有很多这样的插件，其中月影就介绍了[一个顺滑又漂亮的Android下拉刷新与加载更多列表组件]( https://github.com/zarics/ZrcListView)。
+
+
+## 图表类插件echarts ##
+
+echarts 是百度团队的一个作品，现在的版本已经是[echarts 3](http://echarts.baidu.com/)。之前结合underscore 实现的一个饼状图，很好玩的。并且echarts团队维护的文档还有大量的实例和demo。真心为他们点赞了。
+
+    $(".class").html(_.template($("#out").html(), data));
+    var myChart = echarts.init(document.getElementById('chart-outsale'));
+
+    var option = {
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient : 'vertical',
+            x : 'left',
+            data:arryX
+        },
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                magicType : {
+                    show: true, 
+                    type: ['pie', 'funnel'],
+                    option: {
+                        funnel: {
+                            x: '25%',
+                            width: '50%',
+                            funnelAlign: 'center',
+                            max: 1548
+                        }
+                    }
+                },
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        calculable : true,
+        series : [
+            {
+                name:'今日场外销售TOP15购买金额统计',
+                type:'pie',
+                radius : ['50%', '70%'],
+                itemStyle : {
+                    normal : {
+                        label : {
+                            show : false
+                        },
+                        labelLine : {
+                            show : false
+                        }
+                    },
+                    emphasis : {
+                        label : {
+                            show : true,
+                            position : 'center',
+                            textStyle : {
+                                fontSize : '30',
+                                fontWeight : 'bold'
+                            }
+                        }
+                    }
+                },
+                data:arryY1
+            }
+        ]
+    };
+     // 为echarts对象加载数据 
+    myChart.setOption(option);
+
+
+
+
+## jquery树插件 zTree ##
+
+之前参与的一个项目在页面的侧边栏有一个树形的导航，就想到了Jquery的树形插件zTree，当时看了下文档，很快就把之前的改造成功，还是插件可以提高我们的效率。部分代码如下：
+    
+    define(["jquery","ztree","C"],function($){
+    		var ctx = C.Constant.CONTEXT_PATH
+    		
+    		var setting = {
+    			callback:{
+    				onClick:function(evt,tree,node){
+    					if(node.addr){
+    						$("#mainframe").attr("src",node.addr);
+    					}
+    				}
+    			}
+    		};
+    
+    		var zNodes =[
+    			{ name:"理财数据", open:true,
+    				children: [
+    					{ name:"SALE",
+    					 	open:true,
+    						children: [
+    							{ name:"outSale",addr:ctx+"/out_sale.html"},
+    							{ name:"inSale",addr:ctx+"/in_sale.html"}
+    					]},
+    					{ name:"COUNT",
+    					 	open:true,
+    						children: [
+    							{ name:"channel",addr:ctx+"count/channel.html"},
+    							{ name:"product",addr:ctx+"count/product.html"}
+    					]},
+    					{ name:"客户经营",addr:ctx+"count/customerManager.html"}	
+    			    ]
+    			}
+    		];
+    
+    		$(document).ready(function(){
+    			$.fn.zTree.init($("#tree"), setting, zNodes);
+    		});
+    		
+    })
+       
+* [zTree](http://plugins.jquery.com/zTree.v3/) 
+* [演示以参数配置(http://www.ztree.me/v3/main.php#_zTreeInfo)
