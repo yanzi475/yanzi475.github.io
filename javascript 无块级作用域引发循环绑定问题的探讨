@@ -65,7 +65,7 @@ Jquery中利用事件委托来绑定事件的方法有很多，如：**bind,live
 函数闭包也是前端一个很重要的概念。js高级程序设计书中是这样定义的。闭包是指有权访问另一个函数作用域中的变量的函数。创建闭包的常用方式，就是在一个函数内部创建另一个函数。从上面的定义，函数闭包之所以能解决我们讨论的问题，根本还是改变了变量的作用域。在内部定义的函数会把外部函数的活动对象添加到它的作用域链中。
     
     for(var i=0;i<liNodes.length;++i){
-	    liNodes[i].onclick = (function(event){
+	    liNodes[i].onclick = (function(i){
 		    return  function(){
 		    pNode.innerHTML = i;
 		    }
