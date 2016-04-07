@@ -1,0 +1,98 @@
+ # js 常用方法/common  #
+
+ 在工作中我们的每一个项目中都有common，我们想当然会理解这是架构师会提炼出来的一些方法，可以，有时需要我们自己写的时候，你真的会吗？一下是我自己工作之余总结的需要自己必须掌握的。欢迎大家给补充，先谢过哈~~~
+
+## 函数 ##
+
+### 提取url参数###
+
+页面之间的传递数据，除了缓存sessionStorage  || localStorage (自己根据实际情况自行选择)之外，还有一种特别普遍的方式。通过url中的参数传递。
+
+    function getQueryParam(name){
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).replace(/%20/g,"").match(reg);
+        if(r) {
+            return decodeURIComponent(r[2]);
+        }
+        return null;
+    }
+
+
+    
+### 原生js封装ajax对象###
+      var conf ={type:"get",
+            url:"/omm/http/pss/queryFundCategory?fundCode="+fundCode,
+            data:"fundCode="+fundCode,
+            dataType:"json"};
+        //创建xhr对象
+        var createAjax = function() {
+            var xhr = null;
+            try {
+                //IE系列浏览器
+                xhr = new ActiveXObject("microsoft.xmlhttp");
+            } catch (e1) {
+                try {
+                    //非IE浏览器
+                    xhr = new XMLHttpRequest();
+                } catch (e2) {
+                    window.alert("您的浏览器不支持ajax，请更换！");
+                }
+            }
+            return xhr;
+        };
+        
+        // 初始化
+        //type参数,可选
+        var type = conf.type;
+        //url参数，必填 
+        var url = conf.url;
+        //data参数可选，只有在post请求时需要
+        var data = conf.data;
+        //datatype参数可选    
+        var dataType = conf.dataType;
+        //回调函数可选
+        var success = conf.success;
+                                                                                            
+        if (type == null){
+            //type参数可选，默认为get
+            type = "get";
+        }
+        if (dataType == null){
+            //dataType参数可选，默认为text
+            dataType = "text";
+        }
+        // 创建ajax引擎对象
+        var xhr = createAjax();
+        // 打开
+        xhr.open(type, url, true);
+        // 发送
+        if (type == "GET" || type == "get") {
+            xhr.send(null);
+        } else if (type == "POST" || type == "post") {
+            xhr.setRequestHeader("content-type",
+                        "application/x-www-form-urlencoded");
+            xhr.send(data);
+        }
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                if(dataType == "text"||dataType=="TEXT") {
+                    if (success != null){
+                        //普通文本
+                        success(xhr.responseText);
+                    }
+                }else if(dataType=="xml"||dataType=="XML") {
+                    if (success != null){
+                        //接收xml文档    
+                        success(xhr.responseXML);
+                    }  
+                }else if(dataType=="json"||dataType=="JSON") {
+                    if (success != null){
+                        //将json字符串转换为js对象  
+                        success(eval("("+xhr.responseText+")"));
+                    }
+                }
+            }
+        };
+
+这个会在面试中出现，但确实也是基本功。其中一点定义conf变量，我们在项目中有时是从配置中读取的 var conf = sessionStorage.getItem("param") || {};后面加这个{}是很有意义的。这就要说到对象和变量的非法引用，哈哈~~~
+
