@@ -1,0 +1,14 @@
+
+
+
+##数据绑定##
+*取值表达式和ng-bind 
+*动态切换标签样式（更加不同的场景取不同的值）不建议使用，一般使用ng-class{key:value}
+*ng-show 和ng-hide /ng-if / ng-class
+
+ng-bind用于首页，因为在angular 没有加载之前，页面是能看到{{data.key}}的。 
+双想数据绑定，form 表单（题外话，写DOM 尽量用zen coding 的写法）
+
+##指令##
+
+angular 中的指令都是以ng 开头的，可以从官方文档中查看用法
