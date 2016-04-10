@@ -12,3 +12,22 @@ ng-bind用于首页，因为在angular 没有加载之前，页面是能看到{{
 ##指令##
 
 angular 中的指令都是以ng 开头的，可以从官方文档中查看用法
+
+
+##  angular启动 ##
+
+最好的方式是查看源代码 angular.js.主要分三步：
+*1:检查是不是多次启动angular-  window.angular.bootstrap();
+*2:尝试绑定jQuery； bindQuery();
+*3:发布ng提供的API; publishExtendAPI(angular);
+*4:查找ng-app: angularInit(document,bootstrap);
+
+
+*自动启动方式   ng-app指令 指定的模块  angular.module
+*手动启动  等文档加载完成  
+        angular.element(document).ready(function(){
+                angular.bootstrap(docuemnt,['myModule']);
+        })
+
+
+
