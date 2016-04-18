@@ -20,7 +20,7 @@
 * 使Ajax 可缓存
 
 
-### 事件委托 ###
+### 总结一###
 
 
 性能黄金法则：只有10%-20%的用户响应时间花在下载HTML文档上，其余80%-90%时间花在下载页面中的所有组件（图片，脚本，样式表，flash等）进行的http请求上。
@@ -35,17 +35,23 @@ Keep-Alive 可以重用现有的连接，减少域名两种方式减少DNS查找
 
 黑体**bind,live,delegate,on**
 
+## 高性能网站建进阶设指南 ##
 
-###  ###
+###总结二  ###
 
+高效JavaScript中 使用局部变量可以快速查找，因为是在当前活动作用域中，要查找的作用域链短。
+条件流程的判断，if 中出现频率高的条件先判断。多个条件用switch,超过10个可以使用数组，这种情况下一个条件对应的是一个单一值，不是一系列的操作。
+循环的优化，判断条件使用局部变量保存，循环变量递减到0.
+字符串的优化，字符串的连接+运算符可以使用数组的join方法代替。
+   	var data = [],
+   	i = 0;
+   	data[i++] = "hello";
+   	data[i++] = " ";
+   	data[i++] = "world";
+   	var text = data.join("");
+  
 
+		   
     
-    for(var i=0;i<liNodes.length;++i){
-	    liNodes[i].onclick = (function(i){
-		    return  function(){
-		    pNode.innerHTML = i;
-		    }
-	    })(i);
     
-    }
     
