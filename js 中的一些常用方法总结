@@ -143,5 +143,11 @@
     function trim(text){
         return text.replace(/^\s+|\s+$/g,"");
     }
- //是否是微信环境
-		IS_WECHAT: !!navigator.userAgent.match(/MicroMessenger/ig),
+  //是否是微信环境
+	IS_WECHAT: !!navigator.userAgent.match(/MicroMessenger/ig),
+  //布尔转换字符（+号的一个用法）
+   $scope.account.bindWechatFlag = +!$scope.account.bindWechatFlag;
+   +true 为1，+false 为0， +!false为1.
+   
+  
+	
