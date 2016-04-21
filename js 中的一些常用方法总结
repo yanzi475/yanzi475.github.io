@@ -100,3 +100,5 @@
     function trim(text){
         return text.replace(/^\s+|\s+$/g,"");
     }
+ //是否是微信环境
+		IS_WECHAT: !!navigator.userAgent.match(/MicroMessenger/ig),
