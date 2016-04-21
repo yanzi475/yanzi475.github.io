@@ -16,6 +16,18 @@
         }
         return null;
     }
+    
+        /**
+         * 查询URL参数
+         * @param name
+         * @param [url]
+         * @returns {*}
+         */
+        getQueryString: function (name, url) {
+            var reg = new RegExp('[&,?]' + name + '=([^\\&,\\#]*)', 'i');
+            var value = reg.exec(url || location.href);
+            return value ? value[1] : '';
+        },
 
 
     
@@ -95,6 +107,37 @@
         };
 
 这个会在面试中出现，但确实也是基本功。函数申明后的}是没有分号的，而函数表达式后面要有分号，这是规范哈。其中一点定义conf变量，我们在项目中有时是从配置中读取的 var conf = sessionStorage.getItem("param") || {};后面加这个{}是很有意义的。这就要说到对象和变量的非法引用，哈哈~~~
+
+### 正则表达式相关###
+	/**
+         * 常用正则表达式
+         * @returns {boolean}
+         */
+        RegexMap : {
+            //正负整数或浮点数
+            intOrFloat: /^(-)?\d+(\.\d+)?$/,
+            // 手机号码
+            MobileNo: /^1[34587]\d{9}$/,
+            // 银行卡号（大于或等于16位的数字）
+            CardNo: /^\d{16,}$/,
+            // 短验证码（6位数字以上）
+            MobileCode: /^\d{6,}$/,
+            // 交易密码(6-16位数字或字母)
+            OrderPassword: /^\S{6,16}$/,
+            //千分位正则
+            parseThousands: /(\d{1,3})(?=(\d{3})+(?:$|\.))/g,
+            //每4位字符用空格隔开
+            bankCardNo: /(\d{4})(?=\d)/g,
+            //卡号屏蔽
+            parseToStarNumber: /^(\d{4})(\d+)(\d{4})$/,
+            // 后四位屏蔽
+            parseRightFourStar: /^(\w+)(\w{4})$/,
+            //日期格式检测
+            parseDateFormat: /\b(\d{4})\b[^\d]+(\d{1,2})\b[^\d]+(\d{1,2})\b(\s(\d{1,2})\:(\d{1,2})\:(\d{1,2}))?[^\d]?/,
+            // 出生日期掩码，显示格式（"19**年**月*2日")
+            userBirthdayStarRegex: /(\d{2})\d{2}([^\d]+)\d+([^\d]+)\d?(\d)([^\d]+)?/
+        },
+
 
 ### 字符串相关###
     function trim(text){
