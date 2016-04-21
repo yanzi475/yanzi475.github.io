@@ -7,7 +7,7 @@
 ### 提取url参数###
 
 页面之间的传递数据，除了缓存sessionStorage  || localStorage (自己根据实际情况自行选择)之外，还有一种特别普遍的方式。通过url中的参数传递。
-
+第一种方法是获取url参数传递的跳转地址，这个是用encodeURIComponent编码，所以获取时要解码。第二个是常用的情景。
     function getQueryParam(name){
         var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
         var r = window.location.search.substr(1).replace(/%20/g,"").match(reg);
