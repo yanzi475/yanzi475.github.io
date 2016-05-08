@@ -6,6 +6,19 @@ js 中的运算符做的一些类型转换，+运算符的一个操作数是字�
   +n            // 1234
   !n            // false
   
+###属性访问###
+查询一个不存在的属性并不会报错，而是返回undefined;但是对象不存在，再试图访问这个不存在的对象的属性就会报错，
+因为null和undefined 都没有属性。因此，在我们的程序中赋值和判断时是一种常用的写法如下：
+
+var len = book && book.subtitle && book.subtitle.length；
+var data = sessionStory.getValue("PARAMS")|| {};
+
+序列化对象
+我们现在一般都是面向接口编程，在调用接口时，就要把对象转换为字符串，JSON.stringify()和JSON.parse()就是序列化和还原JavaScript对象的。
+
+### this ###
+
+
 
 
 
