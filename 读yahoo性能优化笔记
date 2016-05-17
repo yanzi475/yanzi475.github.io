@@ -33,7 +33,7 @@
 Keep-Alive 可以重用现有的连接，减少域名两种方式减少DNS查找。 
 精简JavaScript 的方式：混淆。 精简JavaScript 代码最流行的工具是Jasmin
 
-黑体**bind,live,delegate,on**
+**bind,live,delegate,on**
 
 ## 高性能网站建进阶设指南 ##
 
@@ -43,6 +43,7 @@ Keep-Alive 可以重用现有的连接，减少域名两种方式减少DNS查找
 条件流程的判断，if 中出现频率高的条件先判断。多个条件用switch,超过10个可以使用数组，这种情况下一个条件对应的是一个单一值，不是一系列的操作。
 循环的优化，判断条件使用局部变量保存，循环变量递减到0.
 字符串的优化，字符串的连接+运算符可以使用数组的join方法代替。
+
    	var data = [],
    	i = 0;
    	data[i++] = "hello";
