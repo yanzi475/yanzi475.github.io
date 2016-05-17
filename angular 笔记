@@ -25,6 +25,7 @@ angular 中的指令都是以ng 开头的，可以从官方文档中查看用法
 
 *自动启动方式   ng-app指令 指定的模块  angular.module
 *手动启动  等文档加载完成  
+
         angular.element(document).ready(function(){
                 angular.bootstrap(docuemnt,['myModule']);
         })
