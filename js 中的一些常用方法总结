@@ -8,6 +8,7 @@
 
 页面之间的传递数据，除了缓存sessionStorage  || localStorage (自己根据实际情况自行选择)之外，还有一种特别普遍的方式。通过url中的参数传递。
 第一种方法是获取url参数传递的跳转地址，这个是用encodeURIComponent编码，所以获取时要解码。第二个是常用的情景。
+
     function getQueryParam(name){
         var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
         var r = window.location.search.substr(1).replace(/%20/g,"").match(reg);
@@ -32,6 +33,7 @@
 
     
 ### 原生js封装ajax对象###
+
       var conf ={type:"get",
             url:"/omm/http/pss/queryFundCategory?fundCode="+fundCode,
             data:"fundCode="+fundCode,
@@ -109,6 +111,7 @@
 这个会在面试中出现，但确实也是基本功。函数申明后的}是没有分号的，而函数表达式后面要有分号，这是规范哈。其中一点定义conf变量，我们在项目中有时是从配置中读取的 var conf = sessionStorage.getItem("param") || {};后面加这个{}是很有意义的。这就要说到对象和变量的非法引用，哈哈~~~
 
 ### 正则表达式相关###
+
 	/**
          * 常用正则表达式
          * @returns {boolean}
@@ -140,6 +143,7 @@
 
 
 ### 字符串相关###
+
     function trim(text){
         return text.replace(/^\s+|\s+$/g,"");
     }
