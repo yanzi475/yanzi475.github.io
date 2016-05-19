@@ -211,6 +211,22 @@
 
             return re + piece;
         }
+        
+ ###字符添加千分位####
+  一些购买产品的数字金额，都会有添加数字分隔符的需求，当然angular中有input-number 指令来规范了。最原始的方法是查询字符加分隔符，正则表达式的方式是最简单的，如下：
+  
+          
+        function(n) {
+            var re = /\d{1,3}(?=(\d{3})+$)/g;
+            var n1 = n;
+            if (n) {
+                n1 = n.replace(/^(\d+)((\.\d+)?)$/, function(s, s1, s2) {
+                    return s1.replace(re, "$&,") + s2;
+                });
+            }
+            return n1;
+        }
+        
    
   
 	
