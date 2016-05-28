@@ -12,7 +12,7 @@
 
 ## 下拉加载更多 ##
 
-这个功能和上面的swiper看似相同，其实则不然。下拉加载是滚动条滑到底部时触发事件来取得数据，并把取得的数据append 到指定的位置。这也是移动端节省流量和提高性能的实现。我们项目中现在是用的scroll。目前也有很多这样的插件，其中[移动端下拉刷新、上拉加载更多插件]( https://github.com/ximan/dropload)，月影也介绍了[一个顺滑又漂亮的Android下拉刷新与加载更多列表组件]( https://github.com/zarics/ZrcListView)。
+这个功能和上面的swiper看似相同，其实则不然。下拉加载是滚动条滑到底部时触发事件来取得数据，并把取得的数据append 到指定的位置。这也是移动端节省流量和提高性能的实现。我们项目中现在是用的iscroll。目前也有很多这样的插件，其中[移动端下拉刷新、上拉加载更多插件]( https://github.com/ximan/dropload)，月影也介绍了[一个顺滑又漂亮的Android下拉刷新与加载更多列表组件]( https://github.com/zarics/ZrcListView)。
 
 
 ## 图表类插件echarts ##
