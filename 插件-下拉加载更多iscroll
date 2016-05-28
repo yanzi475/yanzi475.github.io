@@ -1,0 +1,129 @@
+# 插件iscroll#
+
+ 在之前的一篇中有概略介绍了工作中所用的一些插件集，最近忙于项目中订单模块的开发，所以把iscroll 这个插件重新整理了下，以供以后查阅。
+
+
+## 下拉加载更多 ##
+
+下拉加载更多的插件也有很多，swiper.js,dropload.js都能实现这样的功能。下拉加载是滚动条滑到底部时触发事件来取得数据，并把取得的数据append 到指定的位置。这也是移动端节省流量和提高性能的实现。我们项目中现在是用的iscroll。
+* [iscroll官网]（http://iscrolljs.com/）
+
+
+
+## iscroll ##
+
+在我们的项目中iscroll 是和angular 的指令directive配和使用的。把一些常用的滑动的的操作作为指令。（因项目原有的框架是用angular）/*! iScroll v5.1.3 ~ (c) 2008-2014 Matteo Spinelli ~ http://cubiq.org/license */
+        app.directive("iscroller",['$timeout', '$parse', function($timeout, $parse){
+          return {
+            restrict:"A",
+            scope: {
+                //是否初始化
+                init: '=iscrollInit',
+                //是否重新初始化的表达式
+                initExpression: '@iscrollInit',
+                //是否刷新的标识值
+                refreshed: '=iscrollRefresh',
+                //是否支持X轴的滚动
+                scrollx: '=iscrollScrollX',
+                //是否刷新的表达式
+                refreshExpression: '@iscrollRefresh',
+                //当前滑动对象的引用
+                iscrollerExpression: '@iscrollIscroller',
+                //滚动时执行的回调函数
+                scrolling: '&iscrollScrolling',
+                //滑动完成后回调
+                complete: '&iscrollComplete'
+            },
+            link:function($scope, $element, $attrs){
+                var init = $scope.init,
+                    id = '#' + $attrs.id;
+
+                angular.extend($scope, _context);
+
+                $scope.initIscroll(id, $timeout, $parse);
+
+                //是否要刷新iscroll实例
+                $scope.$watch('refreshed', function(val, old){
+                    if(val ==  1) {
+                        $scope.initIscroll(id, $timeout, $parse);
+                        $scope.refreshExpression && $parse($scope.refreshExpression).assign($scope.$parent, 0);
+                    }
+                });
+            }
+        }
+
+以上只是简单的定义，在所需要用到了页面中引入iscroll文件（使用require，AMD的方式引入文件）。
+
+            //定义滚动的一些方法
+            function scrollHandler(scroll){
+                scroll.on('scroll', function(){
+                    _scroll.call(this);
+                });
+
+                scroll.on('scrollEnd', function(){
+                    _end.call(this);
+                    scroll.refresh();
+                });
+            }
+
+            //滚动
+            function _scroll(){
+                var self = this;
+
+                //向下
+                if(self.y <= self.maxScrollY){
+                    if($scope.order.directive != 1){
+                        $scope.$apply(function(){
+                            order.directive = 1;
+                        });
+                    }
+
+                    if(self.y <= self.maxScrollY-50 && $scope.order.loaded == 0){
+                        $scope.$apply(function(){
+                            $scope.order.loaded = 1;
+                        });
+                    }
+                }
+            }
+
+            //结束
+            function _end(){
+                var self = this;
+
+                if(self.y == self.maxScrollY && $scope.order.loaded == 1 ){
+                    $scope.$apply(function(){//发起请求，不能重复调用
+                        $scope.order.loaded = 3;
+                    });
+                    data.load();    //重新获取数据，重新加载页面
+                }
+            }
+            
+            //初始化滚动控件
+            var scrollerOptions = { probeType:2, tap: true, click: true };
+            order['scroller'] = new IScroll('#scroller', scrollerOptions); //获取页面元素中id，包裹的元素为滚动的内容
+            $scope.$on('finishLoading', function(){ order['scroller'].refresh(); });
+            scrollHandler(order['scroller']);
+            
+  以上写页面时要主要设置id为scroller,标签ul的外出包裹一个div ，是因为只有scroller里的第一个子元素才可以滚动。结构如下：
+      <section   id="scroller" class="scroller" class="nav-multiple-pad" ng-init="order.init();">   
+        <div class="">
+            <ul class="bg-order">
+                <li ng-show="order.tab==0" ng-repeat="o in order">
+                    <div> </div>
+                </li>
+                
+            </ul>
+
+            <div class="last" ng-show="order.directive == 1 && order.hasMore " >
+                <div class="pullUp" ng-class="{sloading: order.loaded != 0}">
+                    <span class="pullUpIcon"></span>
+                    <span class="pullUpLabel" ng-show="order.loaded == 0">向上拉动加载更多</span>
+                    <span class="pullUpLabel" ng-show="order.loaded != 0">加载中...</span>
+                </div>
+            </div>
+                        
+        </div>
+      </section>
+  
+
+  
