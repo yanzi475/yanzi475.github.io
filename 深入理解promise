@@ -1,4 +1,4 @@
-最近一直在忙于项目，但也通过项目对以前的知识点有了更深一层的认识。
+最近一直在忙于项目，但也通过项目对以前的知识点有了更深一层的认识。也可以参考阮一峰老师的一篇[博文](http://www.ruanyifeng.com/blog/2011/08/a_detailed_explanation_of_jquery_deferred_object.html)
 
                   var queryDemandFund = function () {
                         //翻页上限
