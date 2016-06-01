@@ -43,6 +43,10 @@ localStorage和sessionStorage都是用来作为前端辅助性的、优化体验
 $rootScope是根作用域，在单页面中只要是页面url不变，浏览器中的页面没被卸载，在$rootScope上的变量都可以共享。angular 中的通过路由发生跳转的
 页面就可以。
 $scope 是当前作用域，它一般对应于angular的controller.
+作用域的传播$on、$emit和$broadcast的使用
+*　$emit只能向parent controller传递event与data
+*　$broadcast只能向child controller传递event与data
+*　$on用于接收event与data
 
 
 ## angular启动 ##
