@@ -1,6 +1,6 @@
 最近一直在忙于项目，但也通过项目对以前的知识点有了更深一层的认识。也可以参考阮一峰老师的一篇[博文](http://www.ruanyifeng.com/blog/2011/08/a_detailed_explanation_of_jquery_deferred_object.html)
 简单地说，就是使用deferred对象，可以让以前的写的异步方式的javaScript 代码，形式上可以以同步的方式来写。但是每个异步方式都要最好返回deferred对象
-状态。
+状态。当然，这是我自己的理解，下面的这段代码是应用deferre对象来解决展示页面之前筛选数据的应用。
 
                   var queryDemandFund = function () {
                         //翻页上限
@@ -94,96 +94,6 @@
                         });
 
                         
-                    }                    queryDemandFund: function () {
-                        //翻页上限
-                        if(demand.finished == 1){ return; }
-                        var datas,res;
-                        var wait = function(dtd){
-                            var dtd = $.Deferred();
-                            DemandService.queryDemandFundList({
-                                fundBaseType: demand.type,
-                                curPage: demand.page,
-                                pageSize: PAGE_SIZE
-                            },function(data){
+                    }                   
 
-                                if(!data.data){ return; }
-                                datas = data;
-                                removeByValue(datas.data);
-                                function removeByValue(arr) {
-                                    for(var i=0; i<arr.length; i++) {
-                                        if(arr[i].fundInfo.code == "A40006") {
-                                            arr.splice(i, 1);
-                                            break;
-                                        }
-                                    }
-                                }
-                                if(datas.curPage==1 && demand.type =="0101" ){
-                                    DetailService.queryCashTreasureInfo({
-                                        fundCode: "A40006"
-                                    },function(response){
-                                        res = response;
-                                        var xjb = {
-                                            code: "A40006",
-                                            fundInfo: {
-                                                advanceSaleBeginDate: "",
-                                                advanceSaleEndDate: ""
-                                               
-                                            },
-                                            
-                                            tags: "现金管理|T+0"
-                                        };
-
-                                        var idx;
-                                        _.map(datas.data, function(item, key) {
-                                            if (item.fundInfo.code == "PA3012") {
-                                                idx = key;
-                                            }
-                                        });
-                                        datas.data&&datas.data.splice(idx + 1, 0, xjb);
-                                        dtd.resolve();
-                                    },function(){
-                                        dtd.resolve();
-                                    })
-                                }else{
-                                   dtd.resolve(); 
-                                }     
-                            });
-
-                            return dtd.promise()
-                        }
-                
-                        $.when(wait()).done(function(){
-                            var fundInfo = datas.data,
-                            cache = demand.cache;
-                                        
-
-                            if(demand.totalPage == 1){
-                                demand.totalPage = Math.ceil(datas.totalRecord/PAGE_SIZE);
-                                cache.totalPage = demand.totalPage;
-                                cache.page = datas.curPage;
-                            }
-
-                            //数据数据加载到最后隐藏loading
-                            if(datas.curPage == demand.totalPage){
-                                demand.finished  = cache.finished = 1;
-                            }else{
-                                demand.page++;
-                            }
-
-                            //加载更新多时继续缓存数据
-                            if(demand.demandFundLists){
-                                demand.demandFundLists = demand.demandFundLists.concat(fundInfo);
-                                demand.refresh = 1;
-                            }else{
-                                demand.demandFundLists = fundInfo;
-                            }
-
-                            cache.cacheLists = demand.demandFundLists;
-                            $scope.$parent.lists[demand.type] =  cache;
-
-                            demand.refresh = 1;
-                            $scope.$apply();
-                        });
-
-                        
-                    }
+  
