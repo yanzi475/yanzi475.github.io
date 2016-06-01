@@ -2,6 +2,7 @@
 简单地说，就是使用deferred对象，可以让以前的写的异步方式的javaScript 代码，形式上可以以同步的方式来写。但是每个异步方式都要最好返回deferred对象
 状态。当然，这是我自己的理解，下面的这段代码是应用deferre对象来解决展示页面之前筛选数据的应用。
 
+
                   var queryDemandFund = function () {
                         //翻页上限
                         if(demand.finished == 1){ return; }
