@@ -9,9 +9,40 @@
 ng-bind用于首页，因为在angular 没有加载之前，页面是能看到{{data.key}}的。 
 双想数据绑定，form 表单（题外话，写DOM 尽量用zen coding 的写法）
 
+##数据监控##
+
+数据监控是根据绑定的数据的变更，所做的一些操作。他不像数据绑定是后台数据和界面之间的关联。简单的数据监控如下:
+
+        $scope.data = 1;
+        
+        $scope.$watch("data", function(newValue, oldValue) {
+            alert(oldValue + " -> " + newValue);
+        });
+        
+ ##状态流程控制##
+
+ng-show，ng-hide和ng-if，实现的页面效果是相同的。刚接触angular 时会有选择纠结的机会，后来仔细看了下文档，发现了其中的奥妙。
+ng-show，ng-hide根据状态控制的页面元素是存在的，只是根据状态是否显示。而ng-if 控制的DOM 元素是根据状态来是否创建，
+它起到了流程控制的作用，只有符合条件的DOM元素才会被创建，否则不创建，所以在性能上是稍微有那么一点差别的。
+
 ##指令##
 
 angular 中的指令都是以ng 开头的，可以从官方文档中查看用法
+
+##作用域##
+
+前一段时间处理的一个生产问题，可以说和angular 的作用域和sessionStorage有关。导致预约购买，购买页面混乱。
+localStorage和sessionStorage都是用来作为前端辅助性的、优化体验的作用。如果拿来作为参数传递、数据转发、功能逻辑判断，将会非常危险：
+
+* 状态丢失
+* 顺序混乱
+* 易被篡改
+
+页面依赖sessionStorage状态，靠这个中间变量来传值，从到sessionStorage何时被修改，修改的顺序，不好好处理回调和调用顺序
+而采用sessionStorage在单页面上,页面是混乱。那么在angular里单页面传值 可以用$rootScope和事件绑定分发来做。就要说说$rootScope和$scope。
+$rootScope是根作用域，在单页面中只要是页面url不变，浏览器中的页面没被卸载，在$rootScope上的变量都可以共享。angular 中的通过路由发生跳转的
+页面就可以。
+$scope 是当前作用域，它一般对应于angular的controller.
 
 
 ## angular启动 ##
