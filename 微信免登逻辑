@@ -1,0 +1,24 @@
+##微信登陆##
+* 微信环境下的勾选项 
+* 微信授权
+* 微信绑定
+* 微信登陆
+
+具体的流程图已经搬到我的百度脑图中了。
+
+1.微信环境下的勾选项 ，界面的效果
+2.weixin = navigator.userAgent.match(/MicroMessenger/ig),微信环境的判断
+
+index首页tryLogin的情况下进行wechatLogin时--(登陆，首先先判断是否是微信环境，是否已经进行微信授权
+
+绑定)--->只有在微信的环境下weixin = navigator.userAgent.match(/MicroMessenger/ig), 获取openid，
+
+signature签名参数，微信免登，如何没有openid，就先进行微信绑定，调用ucp的接口获取，微信授权，微信
+
+登录。
+
+里面的几个关键函数
+
+account 中的tryLogin尝试登录操作   wexinLogin  微信授权 调ucp获取openid
+
+newLoginController 中的wexinLogin 微信登陆，bindOpenAccount 微信绑定，loginSuccess登陆
