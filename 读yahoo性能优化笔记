@@ -33,8 +33,6 @@
 Keep-Alive 可以重用现有的连接，减少域名两种方式减少DNS查找。 
 精简JavaScript 的方式：混淆。 精简JavaScript 代码最流行的工具是Jasmin
 
-**bind,live,delegate,on**
-
 ## 高性能网站建进阶设指南 ##
 
 ###总结二  ###
