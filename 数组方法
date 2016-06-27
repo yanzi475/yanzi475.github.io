@@ -36,7 +36,7 @@
 
 ## 字符串重复的次数 ##
 
-js判断字符串中出现次数最多的字符 并统计出现次数。
+js判断字符串中出现次数最多的字符 并统计出现次数。使用hashTable 的方式{key:value,key:value},一个简单的算法题。
 
 
         var str = “abcdefgaaaaaaddda”;
