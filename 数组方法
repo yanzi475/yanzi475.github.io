@@ -33,5 +33,32 @@
         arr1 == arr2  //true
         
 以上的代码就很好的阐述了问题，其实，数组的赋值是引用，指向的是同一个对象，数组中的方法concat ，slice 方法不会修改原数组。
+
+## 字符串重复的次数 ##
+
+js判断字符串中出现次数最多的字符 并统计出现次数。
+
+
+        var str = “abcdefgaaaaaaddda”;
+        var obj = {};
+        var arr = [];
+        var letter;
+        for(var i = 0,len = str.length;i<len;i++){
+        letter = str[i];
+        if(!obj[letter]){
+        obj[letter] = 1;
+        }else{
+        obj[letter]++;
+        }
+        }
+        var max_key,max_num=0;
+        for(key in obj){
+        if(max_num <obj[key]){
+        max_num = obj[key];
+        max_key = key;
+        }
+        }
+        document.write(“字母：”+max_key+”　次数：”+max_num);
+
     
  
