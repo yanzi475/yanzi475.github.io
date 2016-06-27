@@ -1,0 +1,38 @@
+ # 数组的方法 #
+
+ 最近参加面试，遇到一些平时不怎么注意的问题
+
+## 数组赋值的异同 ##
+
+页面之间的传递数据，除了缓存sessionStorage  || localStorage (自己根据实际情况自行选择)之外，还有一种特别普遍的方式。通过url中的参数传递。
+第一种方法是获取url参数传递的跳转地址，这个是用encodeURIComponent编码，所以获取时要解码。第二个是常用的情景。
+
+
+
+        var arr1 = [1, 2, 3];
+        var arr2 = arr1.concat();
+        arr1[0] = 0;
+        console.log(arr1); //[0,2,3]
+        console.log(arr2); //[1,2,3]
+
+    
+        var arr1 = [1, 2, 3];
+        var arr2 = arr1.slice(0);
+        arr1[0] = 0;
+        console.log(arr1); //[0,2,3]
+        console.log(arr2); //[1,2,3]
+        
+        
+        var arr1 = [1, 2, 3];
+        var arr2 = arr1
+        arr1[0] = 0;
+        console.log(arr1); //[0,2,3]
+        console.log(arr2); //[0,2,3]
+        
+        var arr3 = [0,2,3]
+        arr1 == arr3  //false
+        arr1 == arr2  //true
+        
+以上的代码就很好的阐述了问题，其实，数组的赋值是引用，指向的是同一个对象，数组中的方法concat ，slice 方法不会修改原数组。
+    
+ 
