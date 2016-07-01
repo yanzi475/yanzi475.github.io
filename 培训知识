@@ -1,0 +1,595 @@
+'use strict';
+var  $ = function(selector){
+	if(typeof element == String){
+		var data = document.getElementsByName(selector);
+		return data;
+	}else{
+		var data = document.getElementsByName(body);
+		return data;
+
+	}
+
+}
+
+
+var $ = function(selector){
+	var o = document.querySelector(selector);
+	var result =function(){
+		show:function(){
+			o.style.display = 'block';
+		},
+		hide:function(){
+			o.style.display = 'none';
+		}
+	};
+};
+
+var $ = function(selector){
+	var o = document.querySelector(selector);
+	return {
+		show:function(){
+			o.style.display = 'block';
+		},
+		hide:function(){
+			o.style.display = 'none';
+		}
+	};
+};
+
+$.prototype.show = function(selector){
+	document.querySelector(selector).style.display = 'inline-block';
+
+}
+
+$.prototype.hide = function(selector){
+	document.querySelector(selector).style.display = 'none';
+
+}
+
+//oo 视角 字面量的方式 ,创建一个对象
+var o ={
+	name:'shy',
+	getName:function(){
+		return o.name;
+
+	}
+
+};
+
+var o = new object();
+o.name='shy';
+o.getName =function(){
+	return this.name;
+}
+
+
+//
+var o2 ={
+	name:'shy',
+	getName:function(){
+		return o.name;
+
+	};
+
+};
+
+var getName=function(){
+		return this.name;
+
+};
+
+//封装private pulbic
+(function(){
+
+	//private
+	var getName=function(){
+		return this.name;
+
+	};
+
+	//public
+	return function(name){
+		this.name= name;
+		this.getName=getName;
+	}
+
+
+}();
+
+var factory =function(name){
+	this.name= name;
+	// this.getName=function(){
+	// 	return this.name;
+
+	// };
+
+};
+
+
+//重用
+
+
+// var proto ={
+// 	getName:function(){
+// 	return this.name;
+
+// 	}
+
+// }; 
+var factory =function(name){
+	this.name= name;
+	// this.getName=function(){
+	// 	return this.name;
+
+	// };
+
+};
+factory.prototype ={
+	getName:function(){
+		return this.name;
+
+	}
+
+}
+
+factory('shy');  //window
+
+var ol = new factory()
+
+// var ol = {};
+// // ol._proto_ =proto;
+// ol._proto_ =factory.prototype;
+// factory.call(ol,'shy')  // 把this赋值为ol，转换对象
+
+var o2 = {};
+// o2._proto_ =proto;
+o2._proto_ =factory.prototype;
+factory.call(o2,'shy2')  // 把this赋值为o2，转换对象
+
+console.log(o2.getName=== ol.getName);//true  指向同一个函数
+
+
+
+
+//不成文的规定首字母大写
+
+var Factory =function(name){
+	this.name= name;
+	// this.getName=function(){
+	// 	return this.name;
+
+	// };
+
+};
+Factory.prototype ={
+	getName:function(){
+		return this.name;
+
+	}
+
+}
+
+factory('shy');  //window
+
+var ol = new Factory('shy');
+console.log(ol.getName());
+
+// var ol = {};
+// // ol._proto_ =proto;
+// ol._proto_ =factory.prototype;
+// factory.call(ol,'shy')  // 把this赋值为ol，转换对象
+
+var o2 = {};
+// o2._proto_ =proto;
+o2._proto_ =factory.prototype;
+factory.call(o2,'shy2')  // 把this赋值为o2，转换对象
+
+console.log(o2.getName=== ol.getName);//true  指向同一个函数
+
+
+
+
+
+
+
+console.log(o['name']);
+console.log(o['getName']());
+o['setName']=0['setName']||new function(){};
+
+window['angular']=window['angular'] || new object();
+
+//function 作为函数 
+var func =function(){
+	console.log(arguments);
+};
+
+func('a');
+
+// function 作为构造器
+var Person =function(name){
+	this.name = name;
+};
+var job = new Person('job');
+cosole.log(job);
+
+
+
+
+var o1 ={
+	show:function(){}
+
+};
+
+var o2 ={
+	show:function(){}
+
+};
+
+o2.__proto__ = o1;
+
+
+for(var  attr in o1 ){
+	o2[attr] = o1[attr];
+}
+
+
+
+
+
+
+var should = require ('should');
+
+var Class =function(){
+	return function(){};
+}
+
+
+describe('要有自己的类',function(){
+	it('要有类',function(){
+		// var o = {}; //true;
+		// var o ; //false
+		// var Person = new Person();
+		var Person = new Class();
+		var jobs = new Person();
+		o.should.be.ok;
+	});
+	it('要有方法',function(){
+		// var o = {}; //true;
+		var Person = new class({
+			show:function(){};
+			hide:function(){};
+
+		})
+
+		var Person = new Class();
+		var jobs = new Person();
+		jobs.should.be.ok;
+		jobs.should.have.prototype('show');
+
+	})
+})
+
+
+
+$(document).ready(function(){
+
+});
+
+var http =require('http');
+var http = {
+	createServer
+}
+
+
+
+http.createServer(function(res,req){
+	
+}).listen(8080);
+
+
+prototype.js
+
+
+var Person = function(){};
+var proto = Person.prototype;
+console.log(proto.constructor === Person);
+
+var jobs =  new Person();
+
+
+
+
+
+var should = require ('should');
+
+var Class =function(options){
+
+	// var glass = function(){};?
+	// for (var attr in options){
+	// 	glass.prototype[attr]= options[attr];
+	// 	return glass;
+	// }
+	
+	// return function(){
+	// 	this.show=function(){};
+	// 	this.hide=function(){};
+	// }
+	 
+	var glass = function(){
+
+		jobs.show = function(){};
+		jobs.hide = function(){};
+
+	}
+	return function(){
+	// 	this.show=function(){};
+	// 	this.hide=function(){};
+	// }
+}
+
+
+describe('要有自己的类',function(){
+	it('要有类',function(){
+		// var o = {}; //true;
+		// var o ; //false
+		// var Person = new Person();
+		var Person = new Class();
+		var jobs = new Person();
+		o.should.be.ok;
+	});
+	it('要有方法',function(){
+		// var o = {}; //true;
+		var Person = new class({
+			show:function(){};
+			hide:function(){};
+
+		})
+
+		person._proto_ = Class.prototype;
+
+		var jobs = new Person();
+		// jobs.show = function(){};
+		// jobs.hide = function(){};
+		jobs.should.be.ok;
+		jobs.should.have.prototype('show');
+
+	})
+})
+
+
+
+var should = require ('should');
+
+var Class =function(options){
+
+	var glass = function(){};
+	for (var attr in options){
+		glass.prototype[attr]= options[attr];
+		return glass;
+	}
+	
+	// return function(){
+	// 	this.show=function(){};
+	// 	this.hide=function(){};
+	// }
+	 
+	var glass = function(){
+		// jobs.name = 'jobs';
+		// this.name = 'jobs';
+		// glass.prototype.name = 'jobs';
+		//  glass.prototype.initialize.apply(this,argument);
+	// 老师的一句话，是你怎么指定jobs    
+	
+		 // if(typeof glass.__proto__.initialize ==='function')
+			// glass.__proto__.initialize.apply(this,arguments);
+		
+		if(typeof this.initialize ==='function')
+			this.initialize.apply(this,arguments);
+
+	};
+	return function(){
+	// 	this.show=function(){};
+	// 	this.hide=function(){};
+	// }
+}
+
+
+describe('要有自己的框架',function(){
+
+	it('要有构造函数',function(){
+		// var o = {}; //true;
+		var Person = new class({
+			initialize：function(name)){
+				this.name = name;
+			}
+		});
+
+			// var glass = function(){};
+	// for (var attr in options){
+	// 	glass.prototype[attr]= options[attr];
+	// 	return glass;
+	// }
+	
+	// return function(){
+	// 	this.show=function(){};
+	// 	this.hide=function(){};
+	// }
+		// var Person = new Class();
+
+		// person._proto_ = Class.prototype;
+
+		var jobs = new Person('jobs');
+
+		// jobs.name = 'jobs';
+		jobs.name.should.eql('jobs');
+
+		// jobs.show = function(){};
+		// jobs.hide = function(){};
+		jobs.should.be.ok;
+		jobs.should.have.prototype('show');
+
+	})
+})
+
+
+
+Number.prototype.after_sec = function(callback){
+	setTimeout(callback,this*1000);
+
+};
+
+
+
+
+var i = 5;
+find 的顺序 原型链的查找顺序
+i.__proto__  -> Number.prototype -> Object.prototype
+
+i.after_sec(function(){
+	console.log('close');
+
+});
+
+
+
+var jobs =new Person();
+
+
+var jobs  = new Object();
+jobs.__proto__ = Person.prototype;
+Person.call(jobs);
+
+
+
+
+#new
+
+##function
+
+###function 作为函数调用
+
+
+###function 作为构造器调用
+
+
+##object  （oo）视角
+
+###字面量
+
+###构造器
+
+
+####中间过程  封装作用域。
+
+
+原型继承
+
+o2.__proto__ = o1;
+
+混入
+
+var o1 ={
+	show:function(){}
+
+};
+
+var o2 ={
+	show:function(){}
+
+};
+for(var  attr in o1 ){
+	o2[attr] = o1[attr];
+}
+
+
+ npm  mocha 是全局的
+npm cnpm
+
+npm install  -g mocha
+npm install  should
+
+
+npm install  -g bower
+mocha  bower
+
+CMD
+commonjs
+export  导入
+require  导出
+
+AMD
+require 导入
+define 导出
+
+
+实现方法
+hack stub 打桩的方法
+
+代码的未来
+
+元编程
+
+coffeescript
+
+
+
+设计模式
+
+创建型
+行为型
+
+
+this 取决于调用而不是定义。
+
+backbone 1579 
+
+
+
+
+var Pingan = Pingan || {};
+var Model= Pingan.Model = function(){
+
+};
+Model.prototype= {
+	constructor: Model,  //重置对象
+	save:function(){},
+	toJSON:function(){},
+	// extend:function(callback){
+	// 	for(var attr in callback)
+	// 	Pingan.Model.__proto__ [attr] = callback[attr];
+
+	// }   //错误的，不能访问
+
+};
+(new Model()).toJSON();
+
+prototype 里面的方法是是new model 出来用到的方法。
+
+Model.extend = function(){
+	return function(){}; // 返回一个new 的对象，function 可以new
+
+	var Product = function(){
+		for(){
+			Product.prototype.save = function(){};
+
+		}
+		 // Product.prototype.save = function(){};
+		}
+		return Product;
+
+	}
+
+};
+
+// var order = new Model();
+ 
+   var Product = Pingan.Model.extend({
+   	myMethod:function(){}
+
+   });
+   var order = new Product();
+   oder.save = function(){};
+   order.__proto__.sava = function(){};
+   Product.prototype.sava = function(){};
+
+
