@@ -351,5 +351,111 @@
   }
         
  ```  
+ 
+##### 身份证校验
+```
+class StringUtils {
+  constructor() {
+    /**
+     * 函数节流
+     *
+     * 待续
+     */
+    this.Reg = {
+      regList: {
+        // phone: /^0?(13[0-9]|15[012356789]|17[678]|18[0-9]|19[0-9]|14[57])[0-9]{8}$/i,
+        phone: /^1[345789]\d{9}$/,
+        name: /^[\u4e00-\u9fa5]{2,32}$/,
+        firstName: /^([\u4e00-\u9fa5]){1,16}$/,
+        familyName: /^([\u4e00-\u9fa5]){1,16}$/,
+        ident: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/i,
+        pwd: /^[0-9]{6}$/,
+        otp: /^[0-9]{6}$/,
+        address: /^([\u4e00-\u9fa5]){2,64}$/,
+        money: /^\d+(\.\d{1,2})?$/,
+        zip: /^[0-9]{6}$/,
+        bankcard: /^([1-9]{1})(\d{14}|\d{18})$/,
+        // email: /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,16})+$/
+        email: /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/
+      },
+      test: function (value, name) {
+        if (!this.regList[name] || !value) {
+          return false
+        } else {
+          return this.regList[name].test(value)
+        }
+      }
+    }
+  }
+  /**
+   * 输入过程中最大位数的实现
+   */
+  static isMaxNum(str, max) {
+    let res
+    if (!str || !max) {
+      res = ''
+      return res
+    }
+    if (str.length >= max) {
+      res = str.substring(0, max)
+    } else {
+      res = str
+    }
+    return res
+  }
+  /**
+   * 身份证最后校验位的判断
+   * @param ID
+   * @returns {boolean}
+   */
+  static validLastId (ID) {
+    var arrInt = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]
+    var arrCh = ['1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2']
+    var sum = 0
+    var residue
+    if (ID.toString().length !== 18) {
+      return false
+    }
+    for (var i = 0; i < 17; i++) {
+      sum += ID.substr(i, 1) * arrInt[i]
+    }
+    residue = arrCh[sum % 11]
+    if (residue === ID.substr(17, 1)) {
+      return true
+    } else {
+      return false
+    }
+  }
+  /**
+   * 性别校验
+   */
+  static validIdSex(str) {
+    var flag
+    if (str && str.length === 18) {
+      flag = str.toString().charAt(16)
+      if (flag % 2 === 0) {
+        return '女'
+      } else {
+        return '男'
+      }
+    } else if (str && str.length === 15) {
+      flag = str.toString().charAt(14)
+      if (flag % 2 === 0) {
+        return '女'
+      } else {
+        return '男'
+      }
+    }
+  }
+  /**
+   * 中文姓名正则的校验
+   */
+  static chineseName(str) {
+    let chineseReg = /^[\u4E00-\u9FA5\uf900-\ufa2d·s]{2,20}$/
+    return chineseReg.test(str)
+  }
+  
+  export {StringUtils}
+```
   
 	
