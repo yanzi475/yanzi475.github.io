@@ -226,7 +226,130 @@
             }
             return n1;
         }
+	
+###日期的处理####
+```
+   /**
+   * 在initDate格式（YYYY-MM-DD）上增加指定日期的函数
+   * @param interval
+   * @param number
+   * @param setDate
+   * @returns {*}
+   * @constructor DateAdd( "D", 5, minDate);
+   * DateAdd(interval,number,date)
+   */
+  static DateAdd(interval, number, initDate) {
+    let date = new Date(initDate)
+    switch (interval) {
+      case 'Y': {
+        date.setFullYear(date.getFullYear() + number)
+        return date
+      }
+      case 'M': {
+        date.setMonth(date.getMonth() + number)
+        return date
+      }
+
+      case 'D': {
+        date.setDate(date.getDate() + number)
+        return date
+      }
+      case 'h' : {
+        date.setHours(date.getHours() + number)
+        return date
+      }
+      case 'm': {
+        date.setMinutes(date.getMinutes() + number)
+        return date
+      }
+      case 's' : {
+        date.setSeconds(date.getSeconds() + number)
+        return date
+      }
+      default: {
+        date.setDate(date.getDate() + number)
+        return date
+      }
+    }
+  }
+
+  /**
+   * 打印一段时间间隔
+   * @param start   // 快捷键的是 /** 回车
+   * @param end
+   * @param gap
+   */
+  static printTime(str, gap) {
+    // printTime
+    let arr = str.split('-')
+    var startTime = new Date('2018-06-06T' + arr[0])
+    var endTime = new Date('2018-06-06T' + arr[1])
+    let time = startTime
+    var list = []
+    let flag = true
+    while (flag) {
+      var firstH = time.getHours() < 10 ? `0${time.getHours()}` : time.getHours()
+      var firstM = time.getMinutes()
+      time.setMinutes(firstM + gap)
+      firstM = firstM < 10 ? `0${firstM}` : firstM
+      var objF = firstH + ':' + firstM
+      var secondH
+      var secondM
+      var objS, obj
+      if (time < endTime) {
+        secondH = time.getHours()
+        secondM = time.getMinutes()
+        secondH = secondH < 10 ? `0${secondH}` : secondH
+        secondM = secondM < 10 ? `0${secondM}` : secondM
+        objS = secondH + ':' + secondM
+      } else {
+        flag = false
+        secondH = endTime.getHours()
+        secondM = endTime.getMinutes()
+        secondH = secondH < 10 ? `0${secondH}` : secondH
+        secondM = secondM < 10 ? `0${secondM}` : secondM
+        objS = secondH + ':' + secondM
+      }
+      obj = objF + '~' + objS
+      list.push(obj)
+    }
+    return list
+  }
+
+  /**
+   * 日期的合法校验
+   * @param date
+   * @returns {boolean}
+   */
+  static isValidDate(date) {
+    return date instanceof Date && !isNaN(date.valueOf())
+  }
+  /**
+   * 判断当前时间是否在某个时间段内
+   * @param nowDate
+   * @param minDate
+   * @param maxDate
+   * @returns {boolean}
+   */
+  static checkDateRange(nowDate, minDate, maxDate) {
+    if (this.isValidDate(nowDate) && this.isValidDate(minDate) && this.isValidDate(maxDate)) {
+      return nowDate.getTime() >= minDate.getTime() && nowDate.getTime() <= maxDate.getTime()
+    } else {
+      return false
+    }
+  }
+  static checkAge(birthday, minAge, maxAge) {
+    let today = new Date()
+    birthday = birthday + ' 00:00:00'
+    birthday = new Date(birthday)
+    birthday.setFullYear(birthday.getFullYear() + minAge)
+    return today >= birthday
+  }
+  static checkNumber(number) {
+    let reg = /^\d+$/
+    return reg.test(number)
+  }
         
-   
+ ```  
   
 	
