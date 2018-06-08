@@ -153,6 +153,100 @@
    $scope.account.bindWechatFlag = +!$scope.account.bindWechatFlag;
    +true 为1，+false 为0， +!false为1.
    
+   ```
+     /**
+   * 逆序单词
+   * @param word
+   */
+  function reverseWord (word) {
+    if (!word) return
+    if (word.indexof(' ') < 0) return word
+    let arr = word.split(' ').reverse()
+    return arr.join(' ')
+  }
+
+  /**
+   * 输出本字符串中出现最多的字符和次数
+   * @param str
+   */
+  function findMax (str) {
+    if (!str) return
+    let obj = {}
+    for (var i = 0; i < str.length; i++) {
+      let item = str.charAt(i)
+      if (obj[item]) {
+        obj[item]++
+      } else {
+        obj[item] = 1
+      }
+    }
+    let max = 0
+    let maxKey = ''
+    for (let key in obj) {
+      if (max <  obj[key]) {
+        max = obj[key]
+        maxKey = key
+      }
+    }
+    return {
+      max: max,
+      maxKey: maxKey
+    }
+  }
+  /**
+   * 输出本字符串中只出现一次并且最靠前的那个字符的位置
+   * @param str
+   */
+  function findOne (str) {
+    if (!str) return
+    let obj = {}
+    for (var i = 0; i < str.length; i++) {
+      let item = str.charAt(i)
+      if (obj[item]) {
+        obj[item]++
+      } else {
+        obj[item] = 1
+      }
+    }
+    let position = 0
+    let item = ''
+    for (let key in obj) {
+      if (obj[key] === 1) {
+        position = obj[key]
+        item = key
+        break
+      }
+    }
+    return {
+      position: position,
+      item: item
+    }
+  }
+  /**
+   *
+   * @param str
+   */
+  function findOneStr (str) {
+    if (!str) return
+    let obj = {}
+    var arr = str.split('')
+    var arrNew = Array.from(new Set(arr))
+    let position = str.indexOf(arrNew[0])
+    let item = arrNew[0]
+    for (let key of arrNew) {
+      if (position > str.indexOf(key)) {
+        position = str.indexOf(key)
+        item = key
+      }
+    }
+    return {
+      position: position,
+      item: item
+    }
+  }
+   
+   ```
+   
 ###大写金额的一些转换####
 
        /**
