@@ -129,6 +129,8 @@
             OrderPassword: /^\S{6,16}$/,
             //千分位正则
             parseThousands: /(\d{1,3})(?=(\d{3})+(?:$|\.))/g,
+	     //千分位正则(二)
+            parseThousands: /(\d)(?=(\d{3})+$)/g,    
             //每4位字符用空格隔开
             bankCardNo: /(\d{4})(?=\d)/g,
             //卡号屏蔽
@@ -152,6 +154,14 @@
   //布尔转换字符（+号的一个用法）
    $scope.account.bindWechatFlag = +!$scope.account.bindWechatFlag;
    +true 为1，+false 为0， +!false为1.
+   
+   /**
+   *  数字金额数加千位符
+   * @param number
+   */
+   vartoThousands = function(number) {
+	    return (number + '').replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+	}
    
    ```
      /**
